@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "6BX9r57QzSf1Do8g4DGf4LISGQP4GujZprL3LV6XvvVdKZDB/lf+J0Ihbgc2Nj9zsvGzJOOh5EVVbkod1tWRGw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\omar\\Desktop\\Omar Khan\\metroidvania\\client\\Metroidvania\\Metroidvania.fsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\omar\\.nuget\\packages\\fsharp.core\\5.0.0\\fsharp.core.5.0.0.nupkg.sha512",
+    "C:\\Users\\omar\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.0.1641\\monogame.framework.desktopgl.3.8.0.1641.nupkg.sha512",
+    "C:\\Users\\omar\\.nuget\\packages\\sdl2\\2.0.5\\sdl2.2.0.5.nupkg.sha512",
+    "C:\\Users\\omar\\.nuget\\packages\\sdl2.redist\\2.0.5\\sdl2.redist.2.0.5.nupkg.sha512",
+    "C:\\Users\\omar\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.13\\microsoft.netcore.app.host.win-x64.3.1.13.nupkg.sha512"
+  ],
+  "logs": []
+}
