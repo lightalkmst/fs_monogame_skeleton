@@ -1,0 +1,13 @@
+# client
+client/.vs
+client/bin
+client/obj
+
+# server
+server/node_modules
+server/build
+server/dist
+server/package-lock.json
+server/.nyc_output
+
+**/credentials*.js

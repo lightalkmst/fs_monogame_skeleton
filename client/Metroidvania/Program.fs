@@ -1,34 +1,20 @@
-﻿module PlatformerGame
+﻿open System   
+open FSharp.Data
 
-open Microsoft.Xna.Framework
-open Microsoft.Xna.Framework.Graphics
+open game
 
-type Game1 () as x =
-   inherit Game()
+open Globals
+open Logging
 
-   do x.Content.RootDirectory <- "Content"
-   let graphics = new GraphicsDeviceManager(x)
-   let mutable spriteBatch = Unchecked.defaultof<SpriteBatch>
-
-   override x.Initialize() =
-       do spriteBatch         
-       do base.Initialize()
-       ()
-
-   override x.LoadContent() =
-       ()
-
-   override x.Update (gameTime) =
-       ()
-
-   override x.Draw (gameTime) =
-       do x.GraphicsDevice.Clear Color.CornflowerBlue
-       ()
-
-let main argv =
-   use g = new Game1()
-   g.Run()
-   System.Console.ReadLine () |> ignore
-   0
-
-main [||] |> ignore
+try
+  if Config.env = "local"
+  then Console.SetWindowSize (180, 50)
+  (new game.Engine.Engine ()).Run()
+with
+| e -> 
+  log e.Message
+  if e.InnerException <> null
+  then log e.InnerException.Message
+  log e.StackTrace
+  ignore <| Console.ReadLine ()
+  () // TODO: fatal error handling

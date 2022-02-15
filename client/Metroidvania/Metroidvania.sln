@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Metroidvania", "Metroidvania.fsproj", "{9496AD44-9856-419D-9811-5B8942345C4B}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "metroidvania", "metroidvania.fsproj", "{9496AD44-9856-419D-9811-5B8942345C4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
