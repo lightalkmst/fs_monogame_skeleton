@@ -1,0 +1,294 @@
+
+#----------------------------- Global Properties ----------------------------#
+
+/outputDir:bin
+/intermediateDir:obj
+/platform:DesktopGL
+/config:
+/profile:Reach
+/compress:False
+
+#-------------------------------- References --------------------------------#
+
+/reference:..\..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Animation.dll
+/reference:..\..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Atlas.dll
+/reference:..\..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Content.Pipeline.AnimationImporters.dll
+/reference:..\..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Content.Pipeline.AtlasImporter.dll
+/reference:..\..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Content.Pipeline.DDSImporter.dll
+/reference:..\..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Content.Pipeline.GraphicsImporters.dll
+/reference:..\..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Content.Pipeline.RawModelProcessor.dll
+/reference:..\..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Content.Pipeline.SLMCImporter.dll
+/reference:..\..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Content.Pipeline.VoxelImporters.dll
+/reference:..\..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Graphics.dll
+/reference:..\..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Shaders.Deferred.dll
+/reference:..\..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Shaders.FXAA.dll
+/reference:..\..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Shaders.InfiniteGrid.dll
+
+#---------------------------------- Content ---------------------------------#
+
+#begin ../../../../../gamedev/Wolf Rigged and Game Ready/textures/Wolf_Body.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../../../../../gamedev/Wolf Rigged and Game Ready/textures/Wolf_Body.jpg;Wolf_Body.jpg
+
+#begin ../../../../../gamedev/Wolf Rigged and Game Ready/textures/Wolf_Body.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../../../../../gamedev/Wolf Rigged and Game Ready/textures/Wolf_Body.jpg;Wolf_Body.jpg
+
+#begin ../../../../../gamedev/Wolf Rigged and Game Ready/textures/Wolf_Eyes_1.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../../../../../gamedev/Wolf Rigged and Game Ready/textures/Wolf_Eyes_1.jpg;Wolf_Eyes_1.jpg
+
+#begin ../../../../../gamedev/Wolf Rigged and Game Ready/textures/Wolf_Eyes_1.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../../../../../gamedev/Wolf Rigged and Game Ready/textures/Wolf_Eyes_1.jpg;Wolf_Eyes_1.jpg
+
+#begin ../../../../../gamedev/Wolf Rigged and Game Ready/textures/Wolf_Eyes_2.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../../../../../gamedev/Wolf Rigged and Game Ready/textures/Wolf_Eyes_2.jpg;Wolf_Eyes_2.jpg
+
+#begin ../../../../../gamedev/Wolf Rigged and Game Ready/textures/Wolf_Eyes_2.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../../../../../gamedev/Wolf Rigged and Game Ready/textures/Wolf_Eyes_2.jpg;Wolf_Eyes_2.jpg
+
+#begin ../../../../../gamedev/Wolf Rigged and Game Ready/textures/Wolf_Fur.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../../../../../gamedev/Wolf Rigged and Game Ready/textures/Wolf_Fur.jpg;Wolf_Fur.jpg
+
+#begin ../../../../../gamedev/Wolf Rigged and Game Ready/textures/Wolf_Fur.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../../../../../gamedev/Wolf Rigged and Game Ready/textures/Wolf_Fur.jpg;Wolf_Fur.jpg
+
+#begin font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:font.spritefont
+
+#begin textures/Wolf_Body.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/Wolf_Body.jpg
+
+#begin textures/Wolf_Eyes_1.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/Wolf_Eyes_1.jpg
+
+#begin textures/Wolf_Eyes_2.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/Wolf_Eyes_2.jpg
+
+#begin textures/Wolf_Fur.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/Wolf_Fur.jpg
+
+#begin Wolf.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Wolf.fbx
+
+#begin Wolf_Body.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Wolf_Body.jpg
+
+#begin Wolf_Body.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Wolf_Body.jpg
+
+#begin Wolf_Eyes_1.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Wolf_Eyes_1.jpg
+
+#begin Wolf_Eyes_1.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Wolf_Eyes_1.jpg
+
+#begin Wolf_Eyes_2.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Wolf_Eyes_2.jpg
+
+#begin Wolf_Eyes_2.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Wolf_Eyes_2.jpg
+
+#begin Wolf_Fur.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Wolf_Fur.jpg
+
+#begin Wolf_Fur.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Wolf_Fur.jpg
+
