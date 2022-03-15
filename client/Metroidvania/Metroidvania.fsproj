@@ -6,12 +6,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Content\font.xnb" />
-    <None Include="Content\Wolf.fbx" />
-    <Content Include="Content\Wolf_Body.jpg" />
-    <Content Include="Content\Wolf_Eyes_1.jpg" />
-    <Content Include="Content\Wolf_Eyes_2.jpg" />
-    <Content Include="Content\Wolf_Fur.jpg" />
+    <None Include="Content\test2.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\test.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\font.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\test.fbx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\font.spritefont">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -51,59 +57,50 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Lidgren.Network" Version="1.0.2" />
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
     <PackageReference Include="sdl2" Version="2.0.5" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="Aether.Animation">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Animation.dll</HintPath>
+      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Animation.dll</HintPath>
     </Reference>
     <Reference Include="Aether.Atlas">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Atlas.dll</HintPath>
+      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Atlas.dll</HintPath>
     </Reference>
     <Reference Include="Aether.Content.Pipeline.AnimationImporters">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Content.Pipeline.AnimationImporters.dll</HintPath>
+      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Content.Pipeline.AnimationImporters.dll</HintPath>
     </Reference>
     <Reference Include="Aether.Content.Pipeline.AtlasImporter">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Content.Pipeline.AtlasImporter.dll</HintPath>
+      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Content.Pipeline.AtlasImporter.dll</HintPath>
     </Reference>
     <Reference Include="Aether.Content.Pipeline.DDSImporter">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Content.Pipeline.DDSImporter.dll</HintPath>
+      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Content.Pipeline.DDSImporter.dll</HintPath>
     </Reference>
     <Reference Include="Aether.Content.Pipeline.GraphicsImporters">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Content.Pipeline.GraphicsImporters.dll</HintPath>
+      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Content.Pipeline.GraphicsImporters.dll</HintPath>
     </Reference>
     <Reference Include="Aether.Content.Pipeline.RawModelProcessor">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Content.Pipeline.RawModelProcessor.dll</HintPath>
+      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Content.Pipeline.RawModelProcessor.dll</HintPath>
     </Reference>
     <Reference Include="Aether.Content.Pipeline.SLMCImporter">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Content.Pipeline.SLMCImporter.dll</HintPath>
+      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Content.Pipeline.SLMCImporter.dll</HintPath>
     </Reference>
     <Reference Include="Aether.Content.Pipeline.VoxelImporters">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Content.Pipeline.VoxelImporters.dll</HintPath>
+      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Content.Pipeline.VoxelImporters.dll</HintPath>
     </Reference>
     <Reference Include="Aether.Graphics">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Graphics.dll</HintPath>
+      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Graphics.dll</HintPath>
     </Reference>
     <Reference Include="Aether.Shaders.Deferred">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Shaders.Deferred.dll</HintPath>
+      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Shaders.Deferred.dll</HintPath>
     </Reference>
     <Reference Include="Aether.Shaders.FXAA">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Shaders.FXAA.dll</HintPath>
+      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Shaders.FXAA.dll</HintPath>
     </Reference>
     <Reference Include="Aether.Shaders.InfiniteGrid">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Debug\Windows\Aether.Shaders.InfiniteGrid.dll</HintPath>
-    </Reference>
-    <Reference Include="Lidgren.Network">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\MonoGame\v3.0\Assemblies\DesktopGL\Lidgren.Network.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoGame.Framework">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\MonoGame\v3.0\Assemblies\DesktopGL\MonoGame.Framework.dll</HintPath>
-      <SpecificVersion>false</SpecificVersion>
-    </Reference>
-    <Reference Include="MonoGame.Framework.Net">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\MonoGame\v3.0\Assemblies\DesktopGL\MonoGame.Framework.Net.dll</HintPath>
-      <SpecificVersion>false</SpecificVersion>
+      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Shaders.InfiniteGrid.dll</HintPath>
     </Reference>
   </ItemGroup>
 

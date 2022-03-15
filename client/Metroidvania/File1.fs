@@ -42,7 +42,7 @@ module Engine =
     let mutable prevKeyboardState = Unchecked.defaultof<KeyboardState>     
     
     let mutable Position = Vector3.Zero
-    let mutable Zoom = 100f
+    let mutable Zoom = 30f
     let mutable RotationY = 0.0f
     let mutable RotationX = 0.0f
     let mutable gameWorldRotation = Matrix.Identity          
@@ -62,12 +62,14 @@ module Engine =
       font <- x.Content.Load<SpriteFont>("font")
 
       grid <- new InfiniteGridComponent(x.GraphicsDevice, x.Content)
-      grid.Initialize()
+      //grid.Initialize()
                    
-      _model_CPU <- x.Content.Load<Model>("Wolf")
-      _model_GPU <- x.Content.Load<Model>("Wolf")
+      _model_CPU <- x.Content.Load<Model>("test2")
+      _model_GPU <- x.Content.Load<Model>("test2")
       
       _animations <- _model_CPU.GetAnimations() // Animation Data are the same between the two models
+      Console.WriteLine "abababa"
+      Console.WriteLine _animations
       //let clip = _animations.Clips.["Take 001"]
       //_animations.SetClip(clip)
 
@@ -87,7 +89,7 @@ module Engine =
 
       prevKeyboardState <- keyboardState
 
-      _animations.Update(gameTime.ElapsedGameTime, true, Matrix.Identity)
+      //_animations.Update(gameTime.ElapsedGameTime, true, Matrix.Identity)
 
       base.Update(gameTime)
 
@@ -97,16 +99,9 @@ module Engine =
       let aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio
       let projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), aspectRatio, 0.01f, 500.0f);
       let view = Matrix.CreateLookAt(
-          new Vector3(0.0f, 35.0f, -Zoom),
-          new Vector3(0.0f, 35.0f, 0.0f), 
+          new Vector3(Zoom, Zoom, -Zoom),
+          new Vector3(0.0f, 0.0f, 0.0f), 
           Vector3.Up);
-
-      // Draw Grid
-      grid.Projection <- projection
-      grid.View <- view
-      //grid.EditMatrix = Matrix.Identity; // XY plane
-      grid.EditMatrix <- Matrix.CreateFromAxisAngle(Vector3.UnitX, MathHelper.ToRadians(-90.0f)) // XZ plane
-      grid.Draw(gameTime)
 
       x.GraphicsDevice.BlendState <- BlendState.Opaque
       x.GraphicsDevice.RasterizerState <- RasterizerState.CullCounterClockwise
@@ -131,14 +126,14 @@ module Engine =
           then (part.Effect :?> BasicEffect).SpecularColor <- Vector3.Zero
           else if drawMode = DrawMode.GPU
           then
-            (part.Effect :?> SkinnedEffect).SpecularColor <- Vector3.Zero;                        
-          x.ConfigureEffectMatrices(part.Effect, Matrix.Identity, view, projection)
-          x.ConfigureEffectLighting(part.Effect)
+            (part.Effect :?> SkinnedEffect).SpecularColor <- Vector3.Zero;
+          x.ConfigureEffectMatrices(part.Effect :> obj :?> IEffectMatrices, Matrix.Identity, view, projection);
+          x.ConfigureEffectLighting(part.Effect :> obj :?> IEffectLights);
 
-          if drawMode = DrawMode.CPU
-          then part.UpdateVertices(_animations.AnimationTransforms) // animate vertices on CPU
-          else if drawMode = DrawMode.GPU
-          then (part.Effect :?> SkinnedEffect).SetBoneTransforms(_animations.AnimationTransforms)// animate vertices on GPU
+          //if drawMode = DrawMode.CPU
+          //then part.UpdateVertices(_animations.AnimationTransforms) // animate vertices on CPU
+          //else if drawMode = DrawMode.GPU
+          //then (part.Effect :?> SkinnedEffect).SetBoneTransforms(_animations.AnimationTransforms)// animate vertices on GPU
         mesh.Draw()
       sw.Stop()
 
@@ -162,69 +157,15 @@ module Engine =
       spriteBatch.DrawString(font, msecMax.ToString("#0.000",CultureInfo.InvariantCulture) + "ms (max)", new Vector2(32.0f, float32 <| x.GraphicsDevice.Viewport.Height - 40), Color.White);
       spriteBatch.End();
         
-      base.Draw(gameTime);
-
-    member x.ConfigureEffectMatrices(effect, world: Matrix, view: Matrix, projection: Matrix) =
-      let targetType = effect.GetType()
-      [| 
-        "World", world
-        "View", view
-        "Projection", projection
-      |]
-      |> Array.iter (fun (name, matrix) -> 
-        match targetType.GetProperty(name) with
-        | null -> ()
-        | targetPropertyInfo -> targetPropertyInfo.SetValue(effect, matrix, null)
-      )
-      //effect.World <- world;
-      //effect.View <- view;
-      //effect.Projection <- projection;
+      base.Draw(gameTime);                   
+      
+    member x.ConfigureEffectMatrices(effect: IEffectMatrices, world: Matrix, view: Matrix, projection: Matrix) =
+      effect.World <- world;
+      effect.View <- view;
+      effect.Projection <- projection;
 
     member x.ConfigureEffectLighting(effect) =
-      let targetType = effect.GetType()
-      
-      ignore <| targetType.GetMethod("EnableDefaultLighting").Invoke(effect, [||])
-      //effect.EnableDefaultLighting();
-
-      match targetType.GetProperty("DirectionalLight0") with
-      | null -> ()
-      | targetPropertyInfo -> 
-        let light = targetPropertyInfo.GetValue(effect, null)
-        match targetType.GetProperty("Direction") with
-        | null -> ()
-        | targetPropertyInfo -> 
-          targetPropertyInfo.SetValue(light, Vector3.Backward, null)
-        match targetType.GetProperty("Enabled") with
-        | null -> ()
-        | targetPropertyInfo -> 
-          targetPropertyInfo.SetValue(light, true, null)
-      match targetType.GetProperty("DirectionalLight1") with
-      | null -> ()
-      | targetPropertyInfo -> 
-        let light = targetPropertyInfo.GetValue(effect, null)
-        match targetType.GetProperty("Enabled") with
-        | null -> ()
-        | targetPropertyInfo -> 
-          targetPropertyInfo.SetValue(light, false, null)
-      match targetType.GetProperty("DirectionalLight2") with
-      | null -> ()
-      | targetPropertyInfo -> 
-        let light = targetPropertyInfo.GetValue(effect, null)
-        match targetType.GetProperty("Enabled") with
-        | null -> ()
-        | targetPropertyInfo -> 
-          targetPropertyInfo.SetValue(light, false, null)
-      //effect.DirectionalLight0.Direction <- Vector3.Backward
-      //effect.DirectionalLight0.Enabled <- true;
-      //effect.DirectionalLight1.Enabled <- false;
-      //effect.DirectionalLight2.Enabled <- false;
-
-    //let AssignMatchingPropertyValues sourceObject targetObject =
-    //  let sourceType = sourceObject.GetType()
-    //  let targetType = targetObject.GetType()
-    //  let sourcePropertyInfos = sourceType.GetProperties(BindingFlags.Public ||| BindingFlags.Instance)
-    //  for sourcePropertyInfo in sourcePropertyInfos do
-    //      match targetType.GetProperty(sourcePropertyInfo.Name) with
-    //      | null -> ()
-    //      | targetPropertyInfo -> targetPropertyInfo.SetValue(targetObject, sourcePropertyInfo.GetValue(sourceObject, null), null)
-    //  targetObject
+      effect.DirectionalLight0.Direction <- Vector3.Backward
+      effect.DirectionalLight0.Enabled <- true;
+      effect.DirectionalLight1.Enabled <- false;
+      effect.DirectionalLight2.Enabled <- false;
