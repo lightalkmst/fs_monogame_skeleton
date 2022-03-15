@@ -1,0 +1,10 @@
+C:\Users\omar\Desktop\Omar Khan\metroidvania\processor\AnimatedModelProcessor\obj\Debug\AnimatedModelPipeline.csproj.CoreCompileInputs.cache
+C:\Users\omar\Desktop\Omar Khan\metroidvania\processor\AnimatedModelProcessor\bin\Debug\AnimatedModelProcessor.dll
+C:\Users\omar\Desktop\Omar Khan\metroidvania\processor\AnimatedModelProcessor\bin\Debug\AnimatedModelProcessor.pdb
+C:\Users\omar\Desktop\Omar Khan\metroidvania\processor\AnimatedModelProcessor\bin\Debug\MonoGame.Framework.Content.Pipeline.dll
+C:\Users\omar\Desktop\Omar Khan\metroidvania\processor\AnimatedModelProcessor\bin\Debug\MonoGame.Framework.dll
+C:\Users\omar\Desktop\Omar Khan\metroidvania\processor\AnimatedModelProcessor\bin\Debug\MonoGame.Framework.xml
+C:\Users\omar\Desktop\Omar Khan\metroidvania\processor\AnimatedModelProcessor\bin\Debug\MonoGame.Framework.Content.Pipeline.xml
+C:\Users\omar\Desktop\Omar Khan\metroidvania\processor\AnimatedModelProcessor\obj\Debug\AnimatedModelPipeline.csproj.CopyComplete
+C:\Users\omar\Desktop\Omar Khan\metroidvania\processor\AnimatedModelProcessor\obj\Debug\AnimatedModelProcessor.dll
+C:\Users\omar\Desktop\Omar Khan\metroidvania\processor\AnimatedModelProcessor\obj\Debug\AnimatedModelProcessor.pdb
