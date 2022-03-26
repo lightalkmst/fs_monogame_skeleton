@@ -54,6 +54,9 @@ module Engine =
     let mutable acc = 0.0
     let mutable c = 0
 
+    let mutable effect = Unchecked.defaultof<Effect>
+    let mutable texture = Unchecked.defaultof<Texture2D>
+
     override x.Initialize () =
       base.Initialize ()
 
@@ -75,6 +78,10 @@ module Engine =
       let clip = _animations.Clips.["Armature|Praise"]
       //let clip = _animations.Clips.["Armature|Action"]
       _animations.SetClip(clip)
+
+      effect <- x.Content.Load<Effect>("textured")
+
+      texture <- x.Content.Load<Texture2D>("test4_uv")
 
     override x.Update gameTime =
       let keyboardState = Keyboard.GetState()
@@ -123,20 +130,62 @@ module Engine =
       sw.Reset()
       sw.Start()
 
-      for mesh in m.Meshes do
-        for part in mesh.MeshParts do
-          if drawMode = DrawMode.CPU
-          then (part.Effect :?> BasicEffect).SpecularColor <- Vector3.Zero
-          else if drawMode = DrawMode.GPU
-          then (part.Effect :?> SkinnedEffect).SpecularColor <- Vector3.Zero
-          x.ConfigureEffectMatrices(part.Effect :> obj :?> IEffectMatrices, Matrix.Identity, view, projection)
-          x.ConfigureEffectLighting(part.Effect :> obj :?> IEffectLights)
+      let draw_model () =
+        for mesh in m.Meshes do
+          for effect in mesh.Effects do
+            (effect :?> BasicEffect).EnableDefaultLighting ()
+            (effect :?> BasicEffect).PreferPerPixelLighting <- true
+            (effect :?> BasicEffect).World <- gameWorldRotation * mesh.ParentBone.Transform
+            (effect :?> BasicEffect).View <- view
+            (effect :?> BasicEffect).Projection <- projection
 
-          if drawMode = DrawMode.CPU
-          then part.UpdateVertices(_animations.AnimationTransforms) // animate vertices on CPU
-          //else if drawMode = DrawMode.GPU
-          //then (part.Effect :?> SkinnedEffect).SetBoneTransforms(_animations.AnimationTransforms)// animate vertices on GPU
-        mesh.Draw()
+          for part in mesh.MeshParts do
+            if drawMode = DrawMode.CPU
+            then (part.Effect :?> BasicEffect).SpecularColor <- Vector3.Zero
+
+            x.ConfigureEffectMatrices(part.Effect :> obj :?> IEffectMatrices, Matrix.Identity, view, projection)
+            x.ConfigureEffectLighting(part.Effect :> obj :?> IEffectLights)
+
+            if drawMode = DrawMode.CPU
+            then part.UpdateVertices(_animations.AnimationTransforms) // animate vertices on CPU
+            //else if drawMode = DrawMode.GPU
+            //then (part.Effect :?> SkinnedEffect).SetBoneTransforms(_animations.AnimationTransforms)// animate vertices on GPU
+          mesh.Draw()
+
+      let draw_model_with_effects () =
+        for mesh in m.Meshes do
+          for part in mesh.MeshParts do
+            part.Effect <- effect
+            part.Effect.Parameters.["World"].SetValue(gameWorldRotation)
+            part.Effect.Parameters.["View"].SetValue(view)
+            part.Effect.Parameters.["Projection"].SetValue(projection)
+
+            // ambient lighting
+            part.Effect.Parameters.["AmbientColor"].SetValue(Color.Red.ToVector4())
+            part.Effect.Parameters.["AmbientIntensity"].SetValue(0.1f)
+
+            // diffuse lighting
+            let worldInverseTransposeMatrix = Matrix.Transpose(Matrix.Invert(mesh.ParentBone.Transform * gameWorldRotation)) // TODO: determine actual
+            part.Effect.Parameters.["WorldInverseTranspose"].SetValue(worldInverseTransposeMatrix)
+            part.Effect.Parameters.["DiffuseLightDirection"].SetValue(new Vector3(Zoom, 0.0f, 0.0f))
+            part.Effect.Parameters.["DiffuseIntensity"].SetValue(0.01f)
+            part.Effect.Parameters.["DiffuseColor"].SetValue(Color.Green.ToVector4())
+
+            // specular lighting
+            part.Effect.Parameters.["Shininess"].SetValue(400.0f)
+            part.Effect.Parameters.["SpecularColor"].SetValue(Color.Blue.ToVector4())
+            part.Effect.Parameters.["SpecularIntensity"].SetValue(100.0f)
+            part.Effect.Parameters.["ViewVector"].SetValue(new Vector3(0.0f, 0.0f, Zoom))
+
+            // texturing
+            part.Effect.Parameters.["ModelTexture"].SetValue(texture)
+            
+            if drawMode = DrawMode.CPU
+            then part.UpdateVertices(_animations.AnimationTransforms) // animate vertices on CPU
+          mesh.Draw()
+
+      draw_model_with_effects ()
+
       sw.Stop()
 
       let mutable msec = sw.Elapsed.TotalMilliseconds
@@ -166,7 +215,7 @@ module Engine =
       effect.View <- view;
       effect.Projection <- projection;
 
-    member x.ConfigureEffectLighting(effect) =
+    member x.ConfigureEffectLighting(effect: IEffectLights) =
       effect.DirectionalLight0.Direction <- Vector3.Backward
       effect.DirectionalLight0.Enabled <- true;
       effect.DirectionalLight1.Enabled <- false;
