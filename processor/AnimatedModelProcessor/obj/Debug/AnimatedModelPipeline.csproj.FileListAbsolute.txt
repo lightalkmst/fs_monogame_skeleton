@@ -8,3 +8,4 @@ C:\Users\omar\Desktop\Omar Khan\metroidvania\processor\AnimatedModelProcessor\bi
 C:\Users\omar\Desktop\Omar Khan\metroidvania\processor\AnimatedModelProcessor\obj\Debug\AnimatedModelPipeline.csproj.CopyComplete
 C:\Users\omar\Desktop\Omar Khan\metroidvania\processor\AnimatedModelProcessor\obj\Debug\AnimatedModelProcessor.dll
 C:\Users\omar\Desktop\Omar Khan\metroidvania\processor\AnimatedModelProcessor\obj\Debug\AnimatedModelProcessor.pdb
+C:\Users\omar\Desktop\Omar Khan\metroidvania\processor\AnimatedModelProcessor\obj\Debug\AnimatedModelPipeline.csprojAssemblyReference.cache

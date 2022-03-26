@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Reader.cs" />
     <Compile Include="Types.cs" />
     <Compile Include="Processor.cs" />

@@ -6,6 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="Content\test5.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\test4.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\test3.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\test2.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -63,49 +72,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Aether.Animation">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Animation.dll</HintPath>
-    </Reference>
-    <Reference Include="Aether.Atlas">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Atlas.dll</HintPath>
-    </Reference>
-    <Reference Include="Aether.Content.Pipeline.AnimationImporters">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Content.Pipeline.AnimationImporters.dll</HintPath>
-    </Reference>
-    <Reference Include="Aether.Content.Pipeline.AtlasImporter">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Content.Pipeline.AtlasImporter.dll</HintPath>
-    </Reference>
-    <Reference Include="Aether.Content.Pipeline.DDSImporter">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Content.Pipeline.DDSImporter.dll</HintPath>
-    </Reference>
-    <Reference Include="Aether.Content.Pipeline.GraphicsImporters">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Content.Pipeline.GraphicsImporters.dll</HintPath>
-    </Reference>
-    <Reference Include="Aether.Content.Pipeline.RawModelProcessor">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Content.Pipeline.RawModelProcessor.dll</HintPath>
-    </Reference>
-    <Reference Include="Aether.Content.Pipeline.SLMCImporter">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Content.Pipeline.SLMCImporter.dll</HintPath>
-    </Reference>
-    <Reference Include="Aether.Content.Pipeline.VoxelImporters">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Content.Pipeline.VoxelImporters.dll</HintPath>
-    </Reference>
-    <Reference Include="Aether.Graphics">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Graphics.dll</HintPath>
-    </Reference>
-    <Reference Include="Aether.Shaders.Deferred">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Shaders.Deferred.dll</HintPath>
-    </Reference>
-    <Reference Include="Aether.Shaders.FXAA">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Shaders.FXAA.dll</HintPath>
-    </Reference>
-    <Reference Include="Aether.Shaders.InfiniteGrid">
-      <HintPath>..\..\..\..\gamedev\Aether.Extras\bin\Release\Windows\Aether.Shaders.InfiniteGrid.dll</HintPath>
-    </Reference>
+    <Folder Include="States\Utils\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="States\Utils\" />
+    <Reference Include="AnimatedModelProcessor">
+      <HintPath>..\..\processor\AnimatedModelProcessor\bin\Debug\AnimatedModelProcessor.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

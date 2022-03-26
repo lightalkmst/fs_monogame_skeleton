@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 // C:\Users\omar\Desktop\gamedev\Aether.Extras\Animation\Animation\Keyframe.cs
 // C:\Users\omar\Desktop\gamedev\Aether.Extras\Animation\Animation\NativeExtensions.cs
 
-namespace AnimatedModelProcessor {
+namespace AnimatedModelPipeline {
   class Animation {
   }
 }

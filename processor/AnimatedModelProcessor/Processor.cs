@@ -622,8 +622,6 @@ namespace AnimatedModelPipeline {
           }
         }
 
-        /////////////////////////
-
         // import animation
         var animationProcessor = new AnimationsProcessor ();
         animationProcessor.MaxBones = this.MaxBones;
@@ -632,7 +630,12 @@ namespace AnimatedModelPipeline {
         var animation = animationProcessor.Process ((NodeContent) input, context);
         outputModel.Tag = animation;
 
-        context.Logger.LogMessage (animation.ToString());
+        context.Logger.LogMessage (animation.ToString ());
+        context.Logger.LogMessage (animation.BindPose.Count.ToString ());
+        context.Logger.LogMessage (animation.BoneNames.Count.ToString ());
+        context.Logger.LogMessage (animation.Clips.Count.ToString ());
+        context.Logger.LogMessage (animation.InvBindPose.Count.ToString ());
+        context.Logger.LogMessage (animation.SkeletonHierarchy.Count.ToString ());
 
         return outputModel;
       }

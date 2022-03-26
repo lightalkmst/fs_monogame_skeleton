@@ -17,8 +17,9 @@ open System.Globalization
 open Microsoft.Xna.Framework
 open Microsoft.Xna.Framework.Graphics
 open Microsoft.Xna.Framework.Input
-open tainicom.Aether.Animation
-open tainicom.Aether.Shaders.Components
+//open tainicom.Aether.Animation
+//open tainicom.Aether.Shaders.Components
+open AnimatedModelPipeline
 
 module Engine =
   type DrawMode =
@@ -32,7 +33,6 @@ module Engine =
     do x.Content.RootDirectory <- "Content"
     let mutable spriteBatch = Unchecked.defaultof<SpriteBatch>
     let mutable font = Unchecked.defaultof<SpriteFont>
-    let mutable grid = Unchecked.defaultof<InfiniteGridComponent>
     
     let mutable _model_CPU = Unchecked.defaultof<Model>
     let mutable _model_GPU = Unchecked.defaultof<Model>
@@ -42,7 +42,7 @@ module Engine =
     let mutable prevKeyboardState = Unchecked.defaultof<KeyboardState>     
     
     let mutable Position = Vector3.Zero
-    let mutable Zoom = 30f
+    let mutable Zoom = 2000f
     let mutable RotationY = 0.0f
     let mutable RotationX = 0.0f
     let mutable gameWorldRotation = Matrix.Identity          
@@ -60,18 +60,21 @@ module Engine =
     override x.LoadContent () =                          
       spriteBatch <- new SpriteBatch(x.GraphicsDevice)
       font <- x.Content.Load<SpriteFont>("font")
-
-      grid <- new InfiniteGridComponent(x.GraphicsDevice, x.Content)
-      //grid.Initialize()
                    
-      _model_CPU <- x.Content.Load<Model>("test2")
-      _model_GPU <- x.Content.Load<Model>("test2")
-      
-      _animations <- _model_CPU.GetAnimations() // Animation Data are the same between the two models
-      Console.WriteLine "abababa"
-      Console.WriteLine _animations
-      //let clip = _animations.Clips.["Take 001"]
-      //_animations.SetClip(clip)
+      _model_CPU <- x.Content.Load<Model>("test4")
+      _model_GPU <- x.Content.Load<Model>("test4")
+
+      _animations <- _model_CPU.GetAnimations()
+
+      Console.WriteLine ("Clip Names:")
+      _animations.Clips
+      |> Seq.map (|KeyValue|)  
+      |> Map.ofSeq
+      |> Map.iter (fun k v -> Console.WriteLine k)
+
+      let clip = _animations.Clips.["Armature|Praise"]
+      //let clip = _animations.Clips.["Armature|Action"]
+      _animations.SetClip(clip)
 
     override x.Update gameTime =
       let keyboardState = Keyboard.GetState()
@@ -89,7 +92,7 @@ module Engine =
 
       prevKeyboardState <- keyboardState
 
-      //_animations.Update(gameTime.ElapsedGameTime, true, Matrix.Identity)
+      _animations.Update(gameTime.ElapsedGameTime, true, Matrix.Identity)
 
       base.Update(gameTime)
 
@@ -97,10 +100,10 @@ module Engine =
       x.GraphicsDevice.Clear(Color.Black);
 
       let aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio
-      let projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), aspectRatio, 0.01f, 500.0f);
+      let projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), aspectRatio, 0.01f, 10000.0f);
       let view = Matrix.CreateLookAt(
-          new Vector3(Zoom, Zoom, -Zoom),
-          new Vector3(0.0f, 0.0f, 0.0f), 
+          new Vector3(0.0f, 0.0f, -Zoom),
+          new Vector3(0.0f, Zoom / 3.0f, 0.0f), 
           Vector3.Up);
 
       x.GraphicsDevice.BlendState <- BlendState.Opaque
@@ -125,13 +128,12 @@ module Engine =
           if drawMode = DrawMode.CPU
           then (part.Effect :?> BasicEffect).SpecularColor <- Vector3.Zero
           else if drawMode = DrawMode.GPU
-          then
-            (part.Effect :?> SkinnedEffect).SpecularColor <- Vector3.Zero;
-          x.ConfigureEffectMatrices(part.Effect :> obj :?> IEffectMatrices, Matrix.Identity, view, projection);
-          x.ConfigureEffectLighting(part.Effect :> obj :?> IEffectLights);
+          then (part.Effect :?> SkinnedEffect).SpecularColor <- Vector3.Zero
+          x.ConfigureEffectMatrices(part.Effect :> obj :?> IEffectMatrices, Matrix.Identity, view, projection)
+          x.ConfigureEffectLighting(part.Effect :> obj :?> IEffectLights)
 
-          //if drawMode = DrawMode.CPU
-          //then part.UpdateVertices(_animations.AnimationTransforms) // animate vertices on CPU
+          if drawMode = DrawMode.CPU
+          then part.UpdateVertices(_animations.AnimationTransforms) // animate vertices on CPU
           //else if drawMode = DrawMode.GPU
           //then (part.Effect :?> SkinnedEffect).SetBoneTransforms(_animations.AnimationTransforms)// animate vertices on GPU
         mesh.Draw()
