@@ -43,30 +43,30 @@ module Main =
       maintain_state data
 
   let draw: game_drawer = fun data ->
-    let state = get_state data.present
-    let main = Assets.get_image main
-    // draw background
-    data.sprite_batch.Draw (main, Rectangle(0, 0, ui_buffer_width, ui_buffer_height), Color.White)
+    //let state = get_state data.present
+    //let main = Assets.get_image main
+    //// draw background
+    //data.sprite_batch.Draw (main, Rectangle(0, 0, ui_buffer_width, ui_buffer_height), Color.White)
 
-    let draw_str_centered = draw_string_centered Constants.font data
+    //let draw_str_centered = draw_string_centered Constants.font data
 
-    // draw title
-    [Constants.game_name]
-    |> List.iteri (fun i x ->
-      draw_str_centered 1.0f (new Vector2 (float32 ui_buffer_width / 2.f, 150.f + float32 i * 72.f)) x
-    )
+    //// draw title
+    //[Constants.game_name]
+    //|> List.iteri (fun i x ->
+    //  draw_str_centered 1.0f (new Vector2 (float32 ui_buffer_width / 2.f, 150.f + float32 i * 72.f)) x
+    //)
 
-    // draw menu items
-    // TODO: flashy selection animation
-    [
-      "Story"
-      "Multiplayer"
-      "Deckbuilder"
-      "Settings"
-      //"Library"
-    ]
-    |> List.iteri (fun i x ->
-      draw_str_centered 0.8f (new Vector2 (float32 ui_buffer_width / 2.f, 650.f + float32 i * 60.f)) (if state.main_selection_y = i then "> " + x + " <" else x)
-    )
+    //// draw menu items
+    //// TODO: flashy selection animation
+    //[
+    //  "Story"
+    //  "Multiplayer"
+    //  "Deckbuilder"
+    //  "Settings"
+    //  //"Library"
+    //]
+    //|> List.iteri (fun i x ->
+    //  draw_str_centered 0.8f (new Vector2 (float32 ui_buffer_width / 2.f, 650.f + float32 i * 60.f)) (if state.main_selection_y = i then "> " + x + " <" else x)
+    //)
 
-  ()
+    ()

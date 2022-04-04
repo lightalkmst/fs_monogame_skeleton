@@ -87,7 +87,7 @@ module States =
     }
     type game_drawer = draw_data -> unit
 
-    let draw_background (data: draw_data) (img: string) = data.sprite_batch.Draw (Assets.get_image img, Rectangle(0, 0, ui_buffer_width, ui_buffer_height), Color.White)
+    //let draw_background (data: draw_data) (img: string) = data.sprite_batch.Draw (Assets.get_image img, Rectangle(0, 0, ui_buffer_width, ui_buffer_height), Color.White)
 
     let screen_vector (pos: Vector2) = Vector2 (float32 ui_buffer_width * pos.X, float32 ui_buffer_height * pos.Y)
 
@@ -98,45 +98,45 @@ module States =
       let y1 = (int <| float32 ui_buffer_height * pos1.Y) - y0
       Rectangle (x0, y0, x1, y1)
 
-    // calculate text lines
-    let get_text_lines (font: string) (size: float32) (width: float32) (s: string) =
-      let sprite_font = Assets.get_font font
-      let ss = s.Split ([|' '|])
-      let mutable cx = 0.0f
-      let dims = 
-        ss 
-        |> Array.map (!~ ( + ) " ")
-        |> Array.map sprite_font.MeasureString 
-        |> Array.map (( * ) size)
-      let mutable i = 0
-      let mutable ans = []
-      let mutable row = []
-      while i < ss.Length do
-        if dims.[i].X + cx > width then
-          cx <- 0.0f
-          ans <- row :: ans
-          row <- []
-        cx <- cx + dims.[i].X
-        row <- ss.[i] :: row
-        i <- i + 1
-      ans <- row :: ans
-      ans
-      |> List.map (List.rev >> (fun x -> String.Join (" ", x)))
-      |> List.rev
-      |> Array.ofList
+    //// calculate text lines
+    //let get_text_lines (font: string) (size: float32) (width: float32) (s: string) =
+    //  let sprite_font = Assets.get_font font
+    //  let ss = s.Split ([|' '|])
+    //  let mutable cx = 0.0f
+    //  let dims = 
+    //    ss 
+    //    |> Array.map (!~ ( + ) " ")
+    //    |> Array.map sprite_font.MeasureString 
+    //    |> Array.map (( * ) size)
+    //  let mutable i = 0
+    //  let mutable ans = []
+    //  let mutable row = []
+    //  while i < ss.Length do
+    //    if dims.[i].X + cx > width then
+    //      cx <- 0.0f
+    //      ans <- row :: ans
+    //      row <- []
+    //    cx <- cx + dims.[i].X
+    //    row <- ss.[i] :: row
+    //    i <- i + 1
+    //  ans <- row :: ans
+    //  ans
+    //  |> List.map (List.rev >> (fun x -> String.Join (" ", x)))
+    //  |> List.rev
+    //  |> Array.ofList
 
-    // draw text lines
+    //// draw text lines
 
-    // TODO: optimize to cache string texture
+    //// TODO: optimize to cache string texture
 
-    let draw_string (font: string) (data: draw_data) (size: float32) (pos: Vector2) (s: string) =
-      let sprite_font = Assets.get_font font
-      data.sprite_batch.DrawString (sprite_font, s, pos, Color.Black, 0.0f, Vector2 (0.0f, 0.0f), size, SpriteEffects.None, 0.0f)
+    //let draw_string (font: string) (data: draw_data) (size: float32) (pos: Vector2) (s: string) =
+    //  let sprite_font = Assets.get_font font
+    //  data.sprite_batch.DrawString (sprite_font, s, pos, Color.Black, 0.0f, Vector2 (0.0f, 0.0f), size, SpriteEffects.None, 0.0f)
 
-    let draw_string_centered (font: string) (data: draw_data) (size: float32) (pos: Vector2) (s: string) =
-      let sprite_font = Assets.get_font font
-      let center_offset = sprite_font.MeasureString s
-      draw_string font data size (pos - center_offset * 0.5f * size) s
+    //let draw_string_centered (font: string) (data: draw_data) (size: float32) (pos: Vector2) (s: string) =
+    //  let sprite_font = Assets.get_font font
+    //  let center_offset = sprite_font.MeasureString s
+    //  draw_string font data size (pos - center_offset * 0.5f * size) s
 
     //let font_heights: (string, float32) Map = Map.ofList []
 

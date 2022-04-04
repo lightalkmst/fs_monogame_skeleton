@@ -61,6 +61,7 @@
     <Compile Include="Input\Input.fs" />
     <Compile Include="Input\Menus.fs" />
     <Compile Include="Input\Sound.fs" />
+    <Compile Include="States\Utils\Drawing.fs" />
     <Compile Include="States\States.fs" />
     <Compile Include="States\Dungeon.fs" />
     <Compile Include="States\Main.fs" />
@@ -75,10 +76,6 @@
     <PackageReference Include="Lidgren.Network" Version="1.0.2" />
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
     <PackageReference Include="sdl2" Version="2.0.5" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="States\Utils\" />
   </ItemGroup>
 
   <ItemGroup>

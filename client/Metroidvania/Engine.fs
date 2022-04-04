@@ -121,40 +121,42 @@ module Engine =
 
  
     override x.Draw game_time =
-      if Assets.are_loaded Constants.menu_assets
-      then
-        x.GraphicsDevice.SetRenderTarget ui_buffer
+      //if Assets.are_loaded Constants.menu_assets
+      //then
+      //  x.GraphicsDevice.SetRenderTarget ui_buffer
 
-        // active game state path
-        sprite_batch.Begin ()
-        let data: draw_data = {
-          graphics = x.GraphicsDevice 
-          sprite_batch = sprite_batch
-          screen_buffer = ui_buffer
-          present = List.head game_states
-          input = input 
-          game_time = game_time
-          total_time = get_total_time game_time
-        }
-        let drawer: game_drawer =
-          match List.head game_states with        
-          | Opening _ -> Opening.draw
-          | Dungeon _ -> Dungeon.draw
-          | Main _ -> Main.draw
-          | Settings _ -> Settings.draw
-        drawer data
-        sprite_batch.End ()
+      //  // active game state path
+      //  sprite_batch.Begin ()
+      //  let data: draw_data = {
+      //    graphics = x.GraphicsDevice 
+      //    sprite_batch = sprite_batch
+      //    screen_buffer = ui_buffer
+      //    present = List.head game_states
+      //    input = input 
+      //    game_time = game_time
+      //    total_time = get_total_time game_time
+      //  }
+      //  let drawer: game_drawer =
+      //    match List.head game_states with        
+      //    | Opening _ -> Opening.draw
+      //    | Dungeon _ -> Dungeon.draw
+      //    | Main _ -> Main.draw
+      //    | Settings _ -> Settings.draw
+      //  drawer data
+      //  sprite_batch.End ()
 
-        x.GraphicsDevice.SetRenderTarget null
+      //  x.GraphicsDevice.SetRenderTarget null
 
-        sprite_batch.Begin (
-          SpriteSortMode.Immediate, 
-          BlendState.AlphaBlend, 
-          SamplerState.LinearClamp, 
-          DepthStencilState.Default, 
-          RasterizerState.CullNone
-        )
+      //  sprite_batch.Begin (
+      //    SpriteSortMode.Immediate, 
+      //    BlendState.AlphaBlend, 
+      //    SamplerState.LinearClamp, 
+      //    DepthStencilState.Default, 
+      //    RasterizerState.CullNone
+      //  )
  
-        sprite_batch.Draw (ui_buffer, new Rectangle(0, 0, config.screen_width, config.screen_height), Color.White)
-        sprite_batch.End ()
+      //  sprite_batch.Draw (ui_buffer, new Rectangle(0, 0, config.screen_width, config.screen_height), Color.White)
+      //  sprite_batch.End ()
+
+    ()
 

@@ -16,7 +16,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace AnimatedModelPipeline {
   // Aether.Extras - AnimationsProcessor
-  [ContentProcessor (DisplayName = "Animation - Aether")]
+  [ContentProcessor (DisplayName = "Animation - Lv30 Wizard")]
   class AnimationsProcessor : ContentProcessor<NodeContent, AnimationsContent> {
     private int _maxBones = SkinnedEffect.MaxBones;
     private int _generateKeyframesFrequency = 0;
@@ -534,12 +534,8 @@ namespace AnimatedModelPipeline {
 
   }
 
-
-
-
-
   // Aether.Extras - DynamicModelProcessor, CpuAnimatedModelProcessor
-  [ContentProcessor (DisplayName = "CPU Animated Model Processor - Lv30 Wizard")]
+  [ContentProcessor (DisplayName = "CPU Animated Model - Lv30 Wizard")]
   public class CPUAnimatedModelProcessor : ModelProcessor, IContentProcessor {
 
 
@@ -599,26 +595,21 @@ namespace AnimatedModelPipeline {
       IndexBufferType = AnimatedModelContent.BufferType.Default;
     }
 
-
-
-
     /// <summary>
     /// 
     /// </summary>
     /// <param name="input"></param>
     /// <param name="context"></param>
     /// <returns></returns>
-
     object IContentProcessor.Process (object input, ContentProcessorContext context) {
       try {
-        context.Logger.LogMessage ("Processing CPUAnimatedModel");
         var model = base.Process ((NodeContent) input, context);
         var outputModel = new AnimatedModelContent (model);
 
         foreach (var mesh in outputModel.Meshes) {
           foreach (var part in mesh.MeshParts) {
-            ProcessVertexBuffer (outputModel, context, part);
-            ProcessIndexBuffer (outputModel, context, part);
+            ProcessVertexBuffer (part);
+            ProcessIndexBuffer (part);
           }
         }
 
@@ -630,13 +621,6 @@ namespace AnimatedModelPipeline {
         var animation = animationProcessor.Process ((NodeContent) input, context);
         outputModel.Tag = animation;
 
-        context.Logger.LogMessage (animation.ToString ());
-        context.Logger.LogMessage (animation.BindPose.Count.ToString ());
-        context.Logger.LogMessage (animation.BoneNames.Count.ToString ());
-        context.Logger.LogMessage (animation.Clips.Count.ToString ());
-        context.Logger.LogMessage (animation.InvBindPose.Count.ToString ());
-        context.Logger.LogMessage (animation.SkeletonHierarchy.Count.ToString ());
-
         return outputModel;
       }
       catch (Exception ex) {
@@ -645,9 +629,8 @@ namespace AnimatedModelPipeline {
       }
     }
 
-    protected void ProcessVertexBuffer (AnimatedModelContent dynamicModel, ContentProcessorContext context, AnimatedMeshPartContent part) {
+    protected void ProcessVertexBuffer (AnimatedMeshPartContent part) {
       if (VertexBufferType != AnimatedModelContent.BufferType.Default) {
-        // Replace the default VertexBufferContent with CpuAnimatedVertexBufferContent.
         AnimatedVertexBufferContent vb;
         if (!_vertexBufferCache.TryGetValue (part.VertexBuffer, out vb)) {
           vb = new AnimatedVertexBufferContent (part.VertexBuffer);
@@ -658,7 +641,7 @@ namespace AnimatedModelPipeline {
       }
     }
 
-    protected virtual void ProcessIndexBuffer (AnimatedModelContent dynamicModel, ContentProcessorContext context, AnimatedMeshPartContent part) {
+    protected virtual void ProcessIndexBuffer (AnimatedMeshPartContent part) {
       if (IndexBufferType != AnimatedModelContent.BufferType.Default) {
         AnimatedIndexBufferContent ib;
         if (!_indexBufferCache.TryGetValue (part.IndexBuffer, out ib)) {

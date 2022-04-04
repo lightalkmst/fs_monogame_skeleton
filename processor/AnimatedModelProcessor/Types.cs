@@ -160,7 +160,6 @@ namespace AnimatedModelPipeline {
     /// </summary>
     public Matrix [] AnimationTransforms { get { return _animationTransforms; } }
 
-
     internal Animations (List<Matrix> bindPose, List<Matrix> invBindPose, List<int> skeletonHierarchy, Dictionary<string, int> boneMap, Dictionary<string, Clip> clips) {
       _bindPose = bindPose;
       _invBindPose = invBindPose;
@@ -175,8 +174,9 @@ namespace AnimatedModelPipeline {
     }
 
     public void SetClip (string clipName) {
-      var clip = Clips ["Base Stack"];
-      SetClip (clip);
+      //var clip = Clips ["Base Stack"];
+      //SetClip (clip);
+      SetClip (Clips [clipName]);
     }
 
     public void SetClip (Clip clip) {
@@ -262,6 +262,10 @@ namespace AnimatedModelPipeline {
         Matrix _tmpInvBindPose = _invBindPose [bone]; //can not pass it as 'ref'
         Matrix.Multiply (ref _tmpInvBindPose, ref _worldTransforms [bone], out _animationTransforms [bone]);
       }
+    }
+
+    public Animations Clone () {
+      return new Animations (new List<Matrix> (_bindPose), new List<Matrix> (_invBindPose), new List<int> (_skeletonHierarchy), new Dictionary<string, int> (_boneMap), new Dictionary<string, Clip> (Clips));
     }
   }
 

@@ -25,6 +25,8 @@ module Globals =
     let uncurrify f (x, y) = f x y
     let cons x y = x :: y
 
+    let tap f x = f x; x
+
     let fst3 (x, _, _) = x
     let snd3 (_, x, _) = x
     let trd3 (_, _, x) = x

@@ -21,23 +21,22 @@ open Microsoft.Xna.Framework.Input
 //open tainicom.Aether.Shaders.Components
 open AnimatedModelPipeline
 
-module Engine =
-  type DrawMode =
-  | CPU = 1
-  | GPU = 2
+open game.Globals.Utilities
+open game.Drawing
+open game.Assets
 
+module Engine =
   type Engine () as x =
     inherit Game ()
 
     let graphics: GraphicsDeviceManager = new GraphicsDeviceManager(x)
-    do x.Content.RootDirectory <- "Content"
     let mutable spriteBatch = Unchecked.defaultof<SpriteBatch>
     let mutable font = Unchecked.defaultof<SpriteFont>
     
     let mutable _model_CPU = Unchecked.defaultof<Model>
     let mutable _model_GPU = Unchecked.defaultof<Model>
     let mutable _animations = Unchecked.defaultof<Animations>
-    let mutable drawMode = DrawMode.CPU
+    let mutable _original_animations = Unchecked.defaultof<Animations>
     
     let mutable prevKeyboardState = Unchecked.defaultof<KeyboardState>     
     
@@ -45,7 +44,14 @@ module Engine =
     let mutable Zoom = 2000f
     let mutable RotationY = 0.0f
     let mutable RotationX = 0.0f
-    let mutable gameWorldRotation = Matrix.Identity          
+    let mutable gameWorldRotation = Matrix.Identity
+    let mutable worlds = [|
+      //Matrix.CreateWorld (new Vector3 (500.0f, 0.0f, 0.0f), new Vector3 (0.0f, 1.0f, 1.0f), new Vector3 (0.0f, 0.0f, -1.0f))
+      
+      Matrix.CreateWorld (Vector3.Left * 500.0f, Vector3.Left, Vector3.Up)
+      Matrix.CreateWorld (Vector3.Right * 500.0f, Vector3.Right, Vector3.Up)
+      //Matrix.Identity
+    |]
     
     let mutable sw = new Stopwatch()
     let mutable msecMin = Double.MaxValue
@@ -57,17 +63,36 @@ module Engine =
     let mutable effect = Unchecked.defaultof<Effect>
     let mutable texture = Unchecked.defaultof<Texture2D>
 
+    let mutable entities = 
+      worlds
+      |> Array.mapi (fun i x ->
+        {
+          id = 0
+          model = "test4"
+          world = x
+          animation = ["Armature|Praise"; "Armature|Pray"].[i]
+          texture = texture
+          time_scale = 1.0
+          animation_start = new GameTime ()
+        }
+      )
+
     override x.Initialize () =
       base.Initialize ()
 
-    override x.LoadContent () =                          
+    override x.LoadContent () = 
+      content <- new AtomizedContentManager (x.Content.ServiceProvider)
+      content.RootDirectory <- "Content"
+
       spriteBatch <- new SpriteBatch(x.GraphicsDevice)
-      font <- x.Content.Load<SpriteFont>("font")
+      font <- content.Load<SpriteFont>("font")
                    
-      _model_CPU <- x.Content.Load<Model>("test4")
-      _model_GPU <- x.Content.Load<Model>("test4")
+      _model_CPU <- content.Load<Model>("test4")
+      _model_GPU <- content.Load<Model>("test4")
 
       _animations <- _model_CPU.GetAnimations()
+      
+      _original_animations <- _animations.Clone()
 
       Console.WriteLine ("Clip Names:")
       _animations.Clips
@@ -75,13 +100,11 @@ module Engine =
       |> Map.ofSeq
       |> Map.iter (fun k v -> Console.WriteLine k)
 
-      let clip = _animations.Clips.["Armature|Praise"]
-      //let clip = _animations.Clips.["Armature|Action"]
-      _animations.SetClip(clip)
+      effect <- content.Load<Effect>("textured")
 
-      effect <- x.Content.Load<Effect>("textured")
+      texture <- content.Load<Texture2D>("test4_uv")
 
-      texture <- x.Content.Load<Texture2D>("test4_uv")
+      ()
 
     override x.Update gameTime =
       let keyboardState = Keyboard.GetState()
@@ -91,15 +114,7 @@ module Engine =
       if keyboardState.IsKeyDown(Keys.Escape) || gamePadState.Buttons.Back = ButtonState.Pressed
       then x.Exit()
 
-      if (keyboardState.IsKeyDown(Keys.Space) && prevKeyboardState.IsKeyUp(Keys.Space)) || gamePadState.Buttons.A = ButtonState.Pressed
-      then
-        let drawModesCount: int = Enum.GetValues(drawMode.GetType()).Length
-        drawMode <- enum<DrawMode> <| ((int drawMode) + 1) % drawModesCount
-        ()
-
       prevKeyboardState <- keyboardState
-
-      _animations.Update(gameTime.ElapsedGameTime, true, Matrix.Identity)
 
       base.Update(gameTime)
 
@@ -107,10 +122,11 @@ module Engine =
       x.GraphicsDevice.Clear(Color.Black);
 
       let aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio
-      let projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), aspectRatio, 0.01f, 10000.0f);
+      //let world = Matrix.CreateWorld (new Vector3 (1000.0f, 0.0f, 0.0f), new Vector3 (0.0f, 0.0f, 0.0f), new Vector3 (0.0f, 1000.0f, 0.0f))
+      let projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(90.0f), aspectRatio, 0.01f, 10000.0f);
       let view = Matrix.CreateLookAt(
-          new Vector3(0.0f, 0.0f, -Zoom),
-          new Vector3(0.0f, Zoom / 3.0f, 0.0f), 
+          Vector3.Forward * Zoom,
+          Vector3.Up * (Zoom / 3.0f), 
           Vector3.Up);
 
       x.GraphicsDevice.BlendState <- BlendState.Opaque
@@ -118,71 +134,18 @@ module Engine =
       x.GraphicsDevice.DepthStencilState <- DepthStencilState.Default
       x.GraphicsDevice.SamplerStates.[0] <- SamplerState.LinearWrap
 
-      let mutable m = _model_CPU
-      if drawMode = DrawMode.CPU
-      then m <- _model_CPU
-      else if drawMode = DrawMode.GPU
-      then m <- _model_GPU
-
-      let transforms = Array.zeroCreate<Matrix> m.Bones.Count
-      m.CopyAbsoluteBoneTransformsTo(transforms)
-
       sw.Reset()
       sw.Start()
 
-      let draw_model () =
-        for mesh in m.Meshes do
-          for effect in mesh.Effects do
-            (effect :?> BasicEffect).EnableDefaultLighting ()
-            (effect :?> BasicEffect).PreferPerPixelLighting <- true
-            (effect :?> BasicEffect).World <- gameWorldRotation * mesh.ParentBone.Transform
-            (effect :?> BasicEffect).View <- view
-            (effect :?> BasicEffect).Projection <- projection
-
-          for part in mesh.MeshParts do
-            if drawMode = DrawMode.CPU
-            then (part.Effect :?> BasicEffect).SpecularColor <- Vector3.Zero
-
-            x.ConfigureEffectMatrices(part.Effect :> obj :?> IEffectMatrices, Matrix.Identity, view, projection)
-            x.ConfigureEffectLighting(part.Effect :> obj :?> IEffectLights)
-
-            if drawMode = DrawMode.CPU
-            then part.UpdateVertices(_animations.AnimationTransforms) // animate vertices on CPU
-            //else if drawMode = DrawMode.GPU
-            //then (part.Effect :?> SkinnedEffect).SetBoneTransforms(_animations.AnimationTransforms)// animate vertices on GPU
-          mesh.Draw()
-
       let draw_model_with_effects () =
-        for mesh in m.Meshes do
-          for part in mesh.MeshParts do
-            part.Effect <- effect
-            part.Effect.Parameters.["World"].SetValue(gameWorldRotation)
-            part.Effect.Parameters.["View"].SetValue(view)
-            part.Effect.Parameters.["Projection"].SetValue(projection)
-
-            // ambient lighting
-            part.Effect.Parameters.["AmbientColor"].SetValue(Color.Red.ToVector4())
-            part.Effect.Parameters.["AmbientIntensity"].SetValue(0.1f)
-
-            // diffuse lighting
-            let worldInverseTransposeMatrix = Matrix.Transpose(Matrix.Invert(mesh.ParentBone.Transform * gameWorldRotation)) // TODO: determine actual
-            part.Effect.Parameters.["WorldInverseTranspose"].SetValue(worldInverseTransposeMatrix)
-            part.Effect.Parameters.["DiffuseLightDirection"].SetValue(new Vector3(Zoom, 0.0f, 0.0f))
-            part.Effect.Parameters.["DiffuseIntensity"].SetValue(0.01f)
-            part.Effect.Parameters.["DiffuseColor"].SetValue(Color.Green.ToVector4())
-
-            // specular lighting
-            part.Effect.Parameters.["Shininess"].SetValue(400.0f)
-            part.Effect.Parameters.["SpecularColor"].SetValue(Color.Blue.ToVector4())
-            part.Effect.Parameters.["SpecularIntensity"].SetValue(100.0f)
-            part.Effect.Parameters.["ViewVector"].SetValue(new Vector3(0.0f, 0.0f, Zoom))
-
-            // texturing
-            part.Effect.Parameters.["ModelTexture"].SetValue(texture)
-            
-            if drawMode = DrawMode.CPU
-            then part.UpdateVertices(_animations.AnimationTransforms) // animate vertices on CPU
-          mesh.Draw()
+        entities
+        |> Array.iter (fun x ->
+          draw_entity {
+            view = view
+            projection = projection
+            time = gameTime
+          } x
+        )
 
       draw_model_with_effects ()
 
@@ -201,11 +164,11 @@ module Engine =
         c <- 0
 
       spriteBatch.Begin();
-      spriteBatch.DrawString(font, "Draw Mode: " + string drawMode, new Vector2(32.0f, 32.0f), Color.White);
       spriteBatch.DrawString(font, msec.ToString("#0.000",CultureInfo.InvariantCulture) + "ms", new Vector2(32.0f, float32 <| x.GraphicsDevice.Viewport.Height - 130), Color.White);
       spriteBatch.DrawString(font, avg.ToString("#0.000",CultureInfo.InvariantCulture) + "ms (avg)", new Vector2(32.0f, float32 <| x.GraphicsDevice.Viewport.Height - 100), Color.White);
       spriteBatch.DrawString(font, msecMin.ToString("#0.000",CultureInfo.InvariantCulture) + "ms (min)", new Vector2(32.0f, float32 <| x.GraphicsDevice.Viewport.Height - 70), Color.White);
       spriteBatch.DrawString(font, msecMax.ToString("#0.000",CultureInfo.InvariantCulture) + "ms (max)", new Vector2(32.0f, float32 <| x.GraphicsDevice.Viewport.Height - 40), Color.White);
+      spriteBatch.DrawString(font, gameTime.TotalGameTime.Milliseconds.ToString("#0.000",CultureInfo.InvariantCulture) + "ms", new Vector2(32.0f, float32 <| x.GraphicsDevice.Viewport.Height - 10), Color.White);
       spriteBatch.End();
         
       base.Draw(gameTime);                   
