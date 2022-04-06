@@ -8,11 +8,13 @@ open System.Diagnostics
 open Microsoft.Xna.Framework
 open Microsoft.Xna.Framework.Graphics
 open Microsoft.Xna.Framework.Content
+open AnimatedModelPipeline
 
 open Globals
 open Globals.Input
 open Globals.State
 open Globals.Values
+open Assets
 open Config
 open States
 open States.Updating
@@ -22,12 +24,9 @@ module Engine =
   type Engine () as x =
     inherit Game ()
  
-    do x.Content.RootDirectory <- "Content"
-    do content_manager <- x.Content
     let graphics = new GraphicsDeviceManager (x)
     let mutable sprite_batch = Unchecked.defaultof<SpriteBatch>
     let mutable ui_buffer = Unchecked.defaultof<RenderTarget2D>
-    let mutable battle_content = Unchecked.defaultof<ContentManager>
     let mutable update_all_inputs = false
     let mutable initialized = false
 
@@ -46,6 +45,9 @@ module Engine =
       game_time.TotalGameTime.Milliseconds + s * 1000
 
     override x.Initialize () =
+      content <- new AtomizedContentManager (content.ServiceProvider)
+      content.RootDirectory <- "Content"
+
       sprite_batch <- new SpriteBatch (x.GraphicsDevice)
       ui_buffer <- new RenderTarget2D (
         x.GraphicsDevice,
@@ -55,12 +57,6 @@ module Engine =
         x.GraphicsDevice.PresentationParameters.BackBufferFormat,
         DepthFormat.Depth24
       )
-      x.Content.RootDirectory <- Config.Constants.app_data_path
-      battle_content <- new ContentManager (x.Content.ServiceProvider)
-      battle_content.RootDirectory <- x.Content.RootDirectory
-      // is this depth stencil stuff for 3d?
-      //x.GraphicsDevice.DepthStencilState <- new DepthStencilState()
-      //x.GraphicsDevice.DepthStencilState.DepthBufferEnable <- true
       base.Initialize ()
       
       graphics.PreferredBackBufferWidth <- config.screen_width
@@ -71,10 +67,10 @@ module Engine =
     override x.LoadContent () =
       //let dir = Config.Constants.app_data_path
       //let loaders: Assets.Loaders = {
-      //  image = x.Content.Load
-      //  font = x.Content.Load
+      //  image = content.Load
+      //  font = content.Load
       //  text = (( + ) dir) >> System.IO.File.ReadAllText
-      //  sound = x.Content.Load
+      //  sound = content.Load
       //}
       
       //Assets.bg_load_assets loaders Constants.menu_assets
@@ -84,7 +80,7 @@ module Engine =
       if not initialized && get_total_time game_time > 0
       then 
         //Sound.Music.init ()
-        //Sound.Music.play_opening_song x.Content
+        //Sound.Music.play_opening_song content
         initialized <- true
 
       // IO

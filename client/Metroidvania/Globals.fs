@@ -323,9 +323,69 @@ module Globals =
       }
 
     module Dungeon =
-      type state = {
+      type action = {
+        id: string
+        start: int
+      }
+
+      type character = {
+        id: int
         x: int
         y: int
+        dx: int
+        dy: int
+        action: action
+        health: int
+        energy: int
+      }
+
+      type tile = {
+        x: int
+        y: int
+        (*
+          physics
+          collision
+          interaction
+        *)
+      }
+      
+      type zone = {
+        id: string
+        tiles: tile array
+        (* 
+          neighbors
+          exits 
+          interactibles
+          events
+        *)
+      }
+
+      type game_states = {
+        zone: zone
+        characters: character array
+      }
+
+      type state = {
+        player_id: int
+        states: game_states array
+
+
+        (* 
+          player character information
+            position
+              x
+              y
+              dx
+              dy
+            action
+              which action
+              start time
+
+
+          previous states?
+            inputs
+            game state log?
+        *)
       }
 
     module Main =
@@ -367,6 +427,3 @@ module Globals =
     let mutable ui_buffer_x_center_f32 = float32 ui_buffer_x_center
     let mutable ui_buffer_y_center = ui_buffer_height / 2
     let mutable ui_buffer_y_center_f32 = float32 ui_buffer_y_center
-
-  // use f# implicit lazy loading of modules to work around requiring the Game instance ContentManager for initialization
-  let mutable content_manager: ContentManager = null

@@ -50,6 +50,12 @@ module Engine =
       
       Matrix.CreateWorld (Vector3.Left * 500.0f, Vector3.Left, Vector3.Up)
       Matrix.CreateWorld (Vector3.Right * 500.0f, Vector3.Right, Vector3.Up)
+      Matrix.CreateWorld (Vector3.Left * 1000.0f, Vector3.Left, Vector3.Up)
+      Matrix.CreateWorld (Vector3.Right * 1000.0f, Vector3.Right, Vector3.Up)
+      Matrix.CreateWorld (Vector3.Left * 600.0f, Vector3.Left, Vector3.Up)
+      Matrix.CreateWorld (Vector3.Right * 600.0f, Vector3.Right, Vector3.Up)
+      Matrix.CreateWorld (Vector3.Left * 1100.0f, Vector3.Left, Vector3.Up)
+      Matrix.CreateWorld (Vector3.Right * 1100.0f, Vector3.Right, Vector3.Up)
       //Matrix.Identity
     |]
     
@@ -70,7 +76,7 @@ module Engine =
           id = 0
           model = "test4"
           world = x
-          animation = ["Armature|Praise"; "Armature|Pray"].[i]
+          animation = ["Armature|Praise"; "Armature|Pray"].[i % 2]
           texture = texture
           time_scale = 1.0
           animation_start = new GameTime ()

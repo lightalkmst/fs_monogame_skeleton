@@ -20,7 +20,6 @@ module Drawing =
   }
 
   type entity_data = {
-    id: int
     model: string
     world: Matrix
     animation: string
@@ -33,9 +32,11 @@ module Drawing =
     let model = Assets.content.Load<Model> (e.model)
 
     let animations = model.Tag :?> Animations
-    let time_change = v.time.TotalGameTime.Subtract e.animation_start.TotalGameTime * e.time_scale
-    animations.SetClip (e.animation)
-    animations.Update (time_change, true, Matrix.Identity) // TODO: change relativeToCurrentTime to false after starting to set animations
+    if animations <> null
+    then
+      let time_change = v.time.TotalGameTime.Subtract e.animation_start.TotalGameTime * e.time_scale
+      animations.SetClip (e.animation)
+      animations.Update (time_change, true, Matrix.Identity) // TODO: change relativeToCurrentTime to false after starting to set animations
     
     let effect = Assets.content.Load<Effect> ("textured")
     effect.Parameters.["World"].SetValue e.world
@@ -60,7 +61,8 @@ module Drawing =
       for part in mesh.MeshParts do
         part.Effect <- effect
         
-        part.UpdateVertices animations.AnimationTransforms
+        if animations <> null
+        then part.UpdateVertices animations.AnimationTransforms
 
       // diffuse lighting
       let worldInverseTransposeMatrix = Matrix.Transpose (Matrix.Invert (mesh.ParentBone.Transform * e.world)) // TODO: determine actual
@@ -68,5 +70,4 @@ module Drawing =
 
       mesh.Draw()
     ()
-
   ()
